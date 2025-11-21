@@ -15,12 +15,13 @@ export default function WireframeCandidateOnboarding() {
     "Email Verification",
     "Account Created",
     "Basic Info",
+    "Resume Upload",
     "Professional Summary",
     "Work Experience",
     "Education",
     "Skills",
-    "Resume Upload",
     "Job Preferences",
+    "Resume Template",
     "Membership Plan",
     "Complete"
   ];
@@ -58,13 +59,15 @@ export default function WireframeCandidateOnboarding() {
   };
 
   const handleSkip = () => {
-    // Skip to membership plan selection
-    setCurrentStep(12); // Membership Plan step
+    if (!canSkipCurrentProfileStep) {
+      return;
+    }
+    setCurrentStep(getNextStep());
   };
 
   const handleSkipToEnd = () => {
     // Skip entire profile setup and go to membership
-    setCurrentStep(12);
+    setCurrentStep(13);
   };
 
   const renderStepContent = () => {
@@ -82,20 +85,22 @@ export default function WireframeCandidateOnboarding() {
       case 5:
         return <BasicInfoStep onSkip={handleSkip} />;
       case 6:
-        return <ProfessionalSummaryStep onSkip={handleSkip} />;
-      case 7:
-        return <WorkExperienceStep onSkip={handleSkip} />;
-      case 8:
-        return <EducationStep onSkip={handleSkip} />;
-      case 9:
-        return <SkillsStep onSkip={handleSkip} />;
-      case 10:
         return <ResumeUploadStep onSkip={handleSkip} />;
+      case 7:
+        return <ProfessionalSummaryStep onSkip={handleSkip} />;
+      case 8:
+        return <WorkExperienceStep onSkip={handleSkip} />;
+      case 9:
+        return <EducationStep onSkip={handleSkip} />;
+      case 10:
+        return <SkillsStep onSkip={handleSkip} />;
       case 11:
         return <JobPreferencesStep onSkip={handleSkip} />;
       case 12:
-        return <MembershipPlanStep onSelectPlan={() => setCurrentStep(13)} />;
+        return <ResumeTemplateStep onSkip={handleSkip} />;
       case 13:
+        return <MembershipPlanStep onSelectPlan={() => setCurrentStep(14)} />;
+      case 14:
         return <CompleteStep />;
       default:
         return <SignUpStep onGoogleLogin={() => { setLoginMethod("google"); setCurrentStep(1); }} onEmailSignup={() => { setLoginMethod("email"); setCurrentStep(2); }} />;
@@ -103,10 +108,12 @@ export default function WireframeCandidateOnboarding() {
   };
 
   // Profile setup steps (for progress calculation)
-  const profileSteps = [5, 6, 7, 8, 9, 10, 11];
+  const profileSteps = [5, 6, 7, 8, 9, 10, 11, 12];
+  const skippableProfileSteps = new Set([5, 6, 7, 8, 9, 10, 12]);
   const isProfileStep = profileSteps.includes(currentStep);
   const currentProfileStepIndex = profileSteps.indexOf(currentStep);
   const totalProfileSteps = profileSteps.length;
+  const canSkipCurrentProfileStep = skippableProfileSteps.has(currentStep);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -173,12 +180,14 @@ export default function WireframeCandidateOnboarding() {
               ← Previous
             </button>
             <div className="flex gap-3">
-              <button
-                onClick={handleSkip}
-                className="px-6 py-2 border-2 border-gray-400 text-black hover:bg-gray-100"
-              >
-                Skip Step
-              </button>
+              {canSkipCurrentProfileStep && (
+                <button
+                  onClick={handleSkip}
+                  className="px-6 py-2 border-2 border-gray-400 text-black hover:bg-gray-100"
+                >
+                  Skip Step
+                </button>
+              )}
               <button
                 onClick={handleContinue}
                 className="px-6 py-2 bg-gray-800 text-white border-2 border-gray-900 hover:bg-gray-700"
@@ -541,19 +550,21 @@ function AccountCreatedStep({ onContinue }: { onContinue: () => void }) {
         <ul className="space-y-3 text-gray-700">
           <li className="flex items-start">
             <span className="mr-3 text-gray-800">1.</span>
-            <span>Complete your profile to get personalized job recommendations</span>
+            <span>Share your basic info and upload your CV to kick off profile setup</span>
           </li>
           <li className="flex items-start">
             <span className="mr-3 text-gray-800">2.</span>
-            <span>Add your work experience and skills</span>
+            <span>Review your professional summary, experience, education, and skills</span>
           </li>
           <li className="flex items-start">
             <span className="mr-3 text-gray-800">3.</span>
-            <span>Set your job preferences</span>
+            <span>Set your job preferences so we can personalize matches</span>
           </li>
           <li className="flex items-start">
             <span className="mr-3 text-gray-800">4.</span>
-            <span>Choose a membership plan to access qualified jobs</span>
+            <span>
+              Choose a resume template (optional) and pick a membership plan to access qualified jobs
+            </span>
           </li>
         </ul>
       </div>
@@ -624,7 +635,7 @@ function BasicInfoStep({ onSkip }: { onSkip: () => void }) {
   );
 }
 
-// Step 6: Professional Summary
+// Step 7: Professional Summary
 function ProfessionalSummaryStep({ onSkip }: { onSkip: () => void }) {
   return (
     <div className="space-y-6">
@@ -661,7 +672,7 @@ function ProfessionalSummaryStep({ onSkip }: { onSkip: () => void }) {
   );
 }
 
-// Step 7: Work Experience
+// Step 8: Work Experience
 function WorkExperienceStep({ onSkip }: { onSkip: () => void }) {
   return (
     <div className="space-y-6">
@@ -736,7 +747,7 @@ function WorkExperienceStep({ onSkip }: { onSkip: () => void }) {
   );
 }
 
-// Step 8: Education
+// Step 9: Education
 function EducationStep({ onSkip }: { onSkip: () => void }) {
   return (
     <div className="space-y-6">
@@ -813,7 +824,7 @@ function EducationStep({ onSkip }: { onSkip: () => void }) {
   );
 }
 
-// Step 9: Skills
+// Step 10: Skills
 function SkillsStep({ onSkip }: { onSkip: () => void }) {
   return (
     <div className="space-y-6">
@@ -868,15 +879,21 @@ function SkillsStep({ onSkip }: { onSkip: () => void }) {
   );
 }
 
-// Step 10: Resume Upload
+// Step 6: Resume Upload & Auto-fill
 function ResumeUploadStep({ onSkip }: { onSkip: () => void }) {
+  const [autoFillPreference, setAutoFillPreference] = useState<"auto" | "manual">("auto");
+
+  const extractionSections = ["Professional Summary", "Work Experience", "Education", "Skills"];
+
   return (
     <div className="space-y-6">
       <div>
         <h2 className="text-2xl font-bold text-black mb-2 border-b-2 border-gray-400 pb-2">
-          Upload Your Resume
+          Upload Your CV
         </h2>
-        <p className="text-gray-600">Upload your resume to make applying easier</p>
+        <p className="text-gray-600">
+          Your personal details are saved. Add your latest CV so we can fast-track the rest of your profile.
+        </p>
       </div>
 
       <div className="space-y-4 max-w-2xl">
@@ -886,7 +903,7 @@ function ResumeUploadStep({ onSkip }: { onSkip: () => void }) {
               <span className="text-2xl">📄</span>
             </div>
           </div>
-          <h3 className="text-lg font-semibold text-black mb-2">Drag & drop your resume here</h3>
+          <h3 className="text-lg font-semibold text-black mb-2">Drag & drop your CV here</h3>
           <p className="text-gray-600 mb-4">or</p>
           <button className="px-6 py-2 bg-gray-800 text-white border-2 border-gray-900 hover:bg-gray-700">
             Browse Files
@@ -894,23 +911,66 @@ function ResumeUploadStep({ onSkip }: { onSkip: () => void }) {
           <p className="text-xs text-gray-500 mt-4">
             Supported formats: PDF, DOC, DOCX (Max 5MB)
           </p>
+          <p className="text-xs text-gray-500 mt-1">Uploading is optional—you can always add it later.</p>
         </div>
 
-        <div className="bg-gray-50 border-2 border-gray-300 p-4 rounded-lg">
-          <h4 className="font-medium text-black mb-2">Resume Tips:</h4>
-          <ul className="text-sm text-gray-700 space-y-1 list-disc list-inside">
-            <li>Make sure your resume is up to date</li>
-            <li>Include relevant keywords from job descriptions</li>
-            <li>Keep it concise (1-2 pages recommended)</li>
-            <li>We'll parse your resume to auto-fill your profile</li>
-          </ul>
+        <div className="bg-gray-50 border-2 border-gray-300 p-4 rounded-lg space-y-3">
+          <h4 className="font-medium text-black">Would you like us to set up your profile automatically?</h4>
+          <div className="space-y-2">
+            <label className="flex items-start gap-3 p-3 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-gray-400">
+              <input
+                type="radio"
+                name="resume-auto-fill"
+                className="mt-1"
+                checked={autoFillPreference === "auto"}
+                onChange={() => setAutoFillPreference("auto")}
+              />
+              <span className="text-sm text-gray-700">
+                Yes, extract details from my CV and auto-fill my profile (recommended)
+              </span>
+            </label>
+            <label className="flex items-start gap-3 p-3 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-gray-400">
+              <input
+                type="radio"
+                name="resume-auto-fill"
+                className="mt-1"
+                checked={autoFillPreference === "manual"}
+                onChange={() => setAutoFillPreference("manual")}
+              />
+              <span className="text-sm text-gray-700">
+                No, I will fill out the remaining details manually
+              </span>
+            </label>
+          </div>
         </div>
 
-        <div className="flex items-center">
-          <input type="checkbox" className="mr-2 border-2 border-gray-400" />
-          <label className="text-sm text-gray-700">
-            I want to create my profile manually (skip resume upload)
-          </label>
+        {autoFillPreference === "auto" && (
+          <div className="bg-white border-2 border-gray-300 p-4 rounded-lg space-y-3">
+            <h4 className="font-semibold text-black">We'll auto-fill these sections for you:</h4>
+            <ul className="space-y-2 text-sm text-gray-700 list-disc list-inside">
+              {extractionSections.map((section) => (
+                <li key={section}>{section}</li>
+              ))}
+            </ul>
+            <div className="bg-yellow-50 border-2 border-yellow-300 p-3 rounded text-sm text-yellow-900">
+              Auto-filled content still needs your review—double-check your Professional Summary, Work Experience,
+              Education, and Skills before moving on.
+            </div>
+          </div>
+        )}
+
+        {autoFillPreference === "manual" && (
+          <div className="bg-blue-50 border-2 border-blue-300 p-4 rounded-lg text-sm text-blue-900">
+            We'll guide you through Professional Summary, Work Experience, Education, and Skills next so you can enter
+            everything yourself.
+          </div>
+        )}
+
+        <div className="flex flex-wrap items-center gap-3 text-sm text-gray-700">
+          <span>Want to skip this for now?</span>
+          <button onClick={onSkip} className="underline font-medium hover:text-black">
+            Skip CV upload & continue manually
+          </button>
         </div>
       </div>
     </div>
@@ -925,7 +985,10 @@ function JobPreferencesStep({ onSkip }: { onSkip: () => void }) {
         <h2 className="text-2xl font-bold text-black mb-2 border-b-2 border-gray-400 pb-2">
           Job Preferences
         </h2>
-        <p className="text-gray-600">Tell us what you're looking for so we can match you with the right jobs</p>
+        <p className="text-gray-600">
+          Tell us what you're looking for so we can match you with the right jobs. This step is required to tailor your
+          experience.
+        </p>
       </div>
 
       <div className="space-y-4 max-w-2xl">
@@ -1009,7 +1072,74 @@ function JobPreferencesStep({ onSkip }: { onSkip: () => void }) {
   );
 }
 
-// Step 12: Membership Plan
+// Step 12: Resume Template Selection (Optional)
+function ResumeTemplateStep({ onSkip }: { onSkip: () => void }) {
+  const templates = [
+    {
+      name: "Modern Focus",
+      description: "Bold headings, clean layout, perfect for tech roles.",
+      badge: "Most Popular"
+    },
+    {
+      name: "Executive Classic",
+      description: "Professional serif typography for leadership roles.",
+      badge: "ATS Friendly"
+    },
+    {
+      name: "Creative Snapshot",
+      description: "Two-column layout with timeline accents for portfolios.",
+      badge: "Visual"
+    }
+  ];
+
+  return (
+    <div className="space-y-6">
+      <div>
+        <h2 className="text-2xl font-bold text-black mb-2 border-b-2 border-gray-400 pb-2">
+          Choose a Resume Template
+        </h2>
+        <p className="text-gray-600">
+          Instantly generate a polished CV using your profile details. Pick a design now or skip this step and come back
+          anytime.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {templates.map((template) => (
+          <div key={template.name} className="border-2 border-gray-300 rounded-lg p-5 flex flex-col gap-4">
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-semibold text-black">{template.name}</h3>
+                <span className="text-xs uppercase tracking-wide border border-gray-400 px-2 py-0.5 text-gray-700">
+                  {template.badge}
+                </span>
+              </div>
+              <p className="text-sm text-gray-600">{template.description}</p>
+            </div>
+            <div className="border-2 border-dashed border-gray-300 rounded-lg h-32 flex items-center justify-center text-sm text-gray-500">
+              Template Preview
+            </div>
+            <div className="flex flex-col gap-2">
+              <button className="px-4 py-2 bg-gray-800 text-white border-2 border-gray-900 hover:bg-gray-700">
+                Select Template
+              </button>
+              <button className="px-4 py-2 border-2 border-gray-400 text-black hover:bg-gray-100">Preview Details</button>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="bg-gray-50 border-2 border-gray-300 p-4 rounded-lg flex flex-wrap items-center gap-3 text-sm text-gray-700">
+        <span>Prefer to create a CV later?</span>
+        <button onClick={onSkip} className="underline font-medium hover:text-black">
+          Skip template creation & finish profile
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// Step 13: Membership Plan
 function MembershipPlanStep({ onSelectPlan }: { onSelectPlan: () => void }) {
   const plans = [
     {
@@ -1121,7 +1251,7 @@ function MembershipPlanStep({ onSelectPlan }: { onSelectPlan: () => void }) {
   );
 }
 
-// Step 13: Complete
+// Step 14: Complete
 function CompleteStep() {
   return (
     <div className="space-y-6 text-center">
