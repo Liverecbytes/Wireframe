@@ -10,7 +10,6 @@ const stepConfig = [
   { key: "basics", label: "Company Basics", type: "profile" },
   { key: "branding", label: "Branding Assets", type: "profile" },
   { key: "culture", label: "Culture & Benefits", type: "profile" },
-  { key: "roles", label: "Open Roles & Hiring Preferences", type: "profile" },
   { key: "job", label: "Build Job Posting", type: "profile" },
   { key: "trust", label: "Trust & Compliance", type: "profile" },
   { key: "preview", label: "Employer Detail Preview", type: "profile" },
@@ -75,40 +74,61 @@ const previewCompany = {
 
 const jobDetailTemplate = {
   title: "Senior Backend Engineer",
-  department: "Core Platform",
-  company: "Nimbus Labs",
-  location: "Austin, TX (Hybrid)",
-  salary: "$160K - $210K",
-  type: "Full-time",
-  remoteLabel: "Remote-friendly",
-  summary: "Lead API-first infrastructure builds that power Nimbus customer copilots.",
-  heroBadges: ["Quick Apply", "Featured", "High Growth Track"],
-  sections: [
-    {
-      title: "About the Role",
-      body:
-        "We’re hiring a senior engineer to own backend systems that ingest millions of data points daily. You’ll partner with AI research, product, and design to ship new copilots.",
-    },
-    {
-      title: "Key Responsibilities",
-      body: "Own platform architecture, review critical PRs, and mentor a pod of 4 engineers.",
-    },
-    {
-      title: "Required Qualifications",
-      body: "5+ years in Go/Node/Python, experience with distributed systems, and strong API chops.",
-    },
-    {
-      title: "Preferred Qualifications",
-      body: "Experience with vector databases, LLM orchestration, and mentoring staff-level ICs.",
-    },
-  ],
-  responsibilities: [
-    "Design and scale multi-region services (Kafka, Postgres, Redis).",
-    "Partner with Security to harden data ingestion pipelines.",
-    "Collaborate with product to define roadmap experiments.",
-  ],
-  benefits: ["Health + wellness", "Recharge bonus", "Remote stipend", "Climate impact days"],
+  city: "Austin",
+  state: "TX",
+  salaryMin: "160000",
+  salaryMax: "210000",
+  remoteType: "Hybrid",
+  seniority: "Mid-senior",
+  experienceMin: "5",
+  experienceMax: "8",
+  employmentType: "Full-time",
+  industry: "Software & Internet",
+  specialization: "Project Lead",
+  relocation: "Allowed",
+  visa: "Available",
+  about:
+    "Own the APIs that power Nimbus customer copilots. Partner with AI research and infra teams to ship reliable, secure services.",
+  responsibilities:
+    "Design and scale multi-region services, mentor engineers, and collaborate with product on roadmap priorities.",
+  requirements:
+    "5+ years building distributed systems with Go/Node/Python, deep understanding of cloud infrastructure, and experience leading projects.",
+  skills: ["Node.js", "TypeScript", "GoLang", "AWS", "Kubernetes"],
 };
+
+const seniorityOptions = ["Associate", "Mid-senior", "Director", "Head", "CXO"];
+const employmentTypes = ["Full-time", "Part-time", "Temporary", "Contract"];
+const industryOptions = [
+  "Software & Internet",
+  "Financial Services",
+  "Healthcare & Life Sciences",
+  "Manufacturing",
+  "Retail & E-commerce",
+  "Energy & Sustainability",
+];
+const specializationOptions = [
+  "Project Lead",
+  "Scrum Master",
+  "Program Manager",
+  "Product Lead",
+  "Engineering Manager",
+  "Data Science Lead",
+];
+const relocationOptions = ["Allowed", "Not allowed"];
+const visaOptions = ["Available", "Not available"];
+const remoteOptions = ["Remote", "Hybrid", "On-Site"];
+const skillLibrary = [
+  "Node.js",
+  "TypeScript",
+  "GoLang",
+  "Python",
+  "AWS",
+  "Kubernetes",
+  "PostgreSQL",
+  "API Design",
+  "Security",
+  "Stakeholder Management",
+];
 
 export default function WireframeEmployerOnboarding() {
   const [currentStep, setCurrentStep] = useState(0);
@@ -122,7 +142,7 @@ export default function WireframeEmployerOnboarding() {
   };
 
   const handlePlanSelected = () => {
-    goToStep(12);
+    goToStep(11);
   };
 
   const getStepContent = () => {
@@ -169,16 +189,14 @@ export default function WireframeEmployerOnboarding() {
       case 6:
         return <CultureBenefitsStep onContinue={() => goToStep(7)} />;
       case 7:
-        return <RolesPreferencesStep onContinue={() => goToStep(8)} />;
+        return <JobCreationStep onContinue={() => goToStep(8)} />;
       case 8:
-        return <JobCreationStep onContinue={() => goToStep(9)} />;
+        return <TrustComplianceStep onContinue={() => goToStep(9)} />;
       case 9:
-        return <TrustComplianceStep onContinue={() => goToStep(10)} />;
+        return <PreviewStep onContinue={() => goToStep(10)} />;
       case 10:
-        return <PreviewStep onContinue={() => goToStep(11)} />;
-      case 11:
         return <MembershipPlanStep onSelectPlan={handlePlanSelected} />;
-      case 12:
+      case 11:
         return <LaunchCompleteStep />;
       default:
         return null;
@@ -641,181 +659,177 @@ function CultureBenefitsStep({ onContinue }: { onContinue: () => void }) {
   );
 }
 
-function RolesPreferencesStep({ onContinue }: { onContinue: () => void }) {
-  return (
-    <div className="space-y-6">
-      <h3 className="text-2xl font-semibold">Open roles & hiring preferences</h3>
-      <p className="text-sm text-gray-600">
-        Employers must declare at least one active requisition before showcasing their brand publicly.
-      </p>
-      <div className="border border-gray-200 rounded-lg p-4 space-y-4">
-        <div className="grid md:grid-cols-2 gap-4">
-          <div>
-            <label className="text-sm font-medium text-gray-700">Role title *</label>
-            <input className="mt-2 w-full border-2 border-gray-400 px-4 py-2" defaultValue="Senior Backend Engineer" />
-          </div>
-          <div>
-            <label className="text-sm font-medium text-gray-700">Location *</label>
-            <input className="mt-2 w-full border-2 border-gray-400 px-4 py-2" defaultValue="Austin, TX (Hybrid)" />
-          </div>
-        </div>
-        <div className="grid md:grid-cols-2 gap-4">
-          <div>
-            <label className="text-sm font-medium text-gray-700">Salary range *</label>
-            <input className="mt-2 w-full border-2 border-gray-400 px-4 py-2" defaultValue="$160K - $210K" />
-          </div>
-          <div>
-            <label className="text-sm font-medium text-gray-700">Hiring urgency</label>
-            <select className="mt-2 w-full border-2 border-gray-400 px-4 py-2">
-              <option>Immediate</option>
-              <option>Within 30 days</option>
-              <option>Pipeline only</option>
-            </select>
-          </div>
-        </div>
-        <div>
-          <label className="text-sm font-medium text-gray-700">Ideal candidate signals</label>
-          <textarea
-            className="mt-2 w-full border-2 border-gray-400 px-4 py-3 min-h-[100px]"
-            placeholder="Required tech stack, experience level, certifications..."
-          />
-        </div>
-      </div>
-      <button
-        onClick={onContinue}
-        className="w-full border-2 border-gray-900 bg-gray-900 text-white px-4 py-3 text-sm font-semibold"
-      >
-        Continue to trust signals →
-      </button>
-    </div>
-  );
-}
-
 function JobCreationStep({ onContinue }: { onContinue: () => void }) {
   const job = jobDetailTemplate;
+  const [selectedSkills, setSelectedSkills] = useState<string[]>(job.skills);
 
   return (
     <div className="space-y-6">
       <h3 className="text-2xl font-semibold">Build job posting</h3>
       <p className="text-sm text-gray-600">
-        This form mirrors the LiveRec job detail layout. We’ve pre-filled it with your draft requisition so the public job
-        page matches the detail view candidates already explore.
+        This form mirrors the LiveRec job detail layout. Fill out the structured data and descriptive copy so the public job page matches candidate expectations.
       </p>
 
       <div className="grid md:grid-cols-2 gap-4">
         <div>
-          <label className="text-sm font-medium text-gray-700">Job title *</label>
+          <label className="text-sm font-medium text-gray-700">Job name *</label>
           <input className="mt-2 w-full border-2 border-gray-400 px-4 py-2" defaultValue={job.title} />
         </div>
         <div>
-          <label className="text-sm font-medium text-gray-700">Department *</label>
-          <input className="mt-2 w-full border-2 border-gray-400 px-4 py-2" defaultValue={job.department} />
+          <label className="text-sm font-medium text-gray-700">City *</label>
+          <input className="mt-2 w-full border-2 border-gray-400 px-4 py-2" defaultValue={job.city} />
         </div>
         <div>
-          <label className="text-sm font-medium text-gray-700">Primary location *</label>
-          <input className="mt-2 w-full border-2 border-gray-400 px-4 py-2" defaultValue={job.location} />
-          <p className="text-xs text-gray-500 mt-1">Matches the location chips on the job detail header.</p>
+          <label className="text-sm font-medium text-gray-700">State *</label>
+          <input className="mt-2 w-full border-2 border-gray-400 px-4 py-2" defaultValue={job.state} />
         </div>
         <div>
-          <label className="text-sm font-medium text-gray-700">Compensation band *</label>
-          <input className="mt-2 w-full border-2 border-gray-400 px-4 py-2" defaultValue={job.salary} />
+          <label className="text-sm font-medium text-gray-700">Remote type *</label>
+          <select className="mt-2 w-full border-2 border-gray-400 px-4 py-2" defaultValue={job.remoteType}>
+            {remoteOptions.map((option) => (
+              <option key={option}>{option}</option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label className="text-sm font-medium text-gray-700">Salary range *</label>
+          <div className="mt-2 grid grid-cols-2 gap-3">
+            <div>
+              <span className="text-xs text-gray-500">Min ($)</span>
+              <input
+                type="number"
+                className="mt-1 w-full border-2 border-gray-400 px-4 py-2"
+                defaultValue={job.salaryMin}
+              />
+            </div>
+            <div>
+              <span className="text-xs text-gray-500">Max ($)</span>
+              <input
+                type="number"
+                className="mt-1 w-full border-2 border-gray-400 px-4 py-2"
+                defaultValue={job.salaryMax}
+              />
+            </div>
+          </div>
+        </div>
+        <div>
+          <label className="text-sm font-medium text-gray-700">Seniority level *</label>
+          <select className="mt-2 w-full border-2 border-gray-400 px-4 py-2" defaultValue={job.seniority}>
+            {seniorityOptions.map((option) => (
+              <option key={option}>{option}</option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label className="text-sm font-medium text-gray-700">Work experience *</label>
+          <div className="mt-2 grid grid-cols-2 gap-3">
+            <div>
+              <span className="text-xs text-gray-500">Min years</span>
+              <input
+                type="number"
+                className="mt-1 w-full border-2 border-gray-400 px-4 py-2"
+                defaultValue={job.experienceMin}
+              />
+            </div>
+            <div>
+              <span className="text-xs text-gray-500">Max years</span>
+              <input
+                type="number"
+                className="mt-1 w-full border-2 border-gray-400 px-4 py-2"
+                defaultValue={job.experienceMax}
+              />
+            </div>
+          </div>
         </div>
         <div>
           <label className="text-sm font-medium text-gray-700">Employment type *</label>
-          <input className="mt-2 w-full border-2 border-gray-400 px-4 py-2" defaultValue={job.type} />
+          <select className="mt-2 w-full border-2 border-gray-400 px-4 py-2" defaultValue={job.employmentType}>
+            {employmentTypes.map((type) => (
+              <option key={type}>{type}</option>
+            ))}
+          </select>
         </div>
         <div>
-          <label className="text-sm font-medium text-gray-700">Remote note</label>
-          <input className="mt-2 w-full border-2 border-gray-400 px-4 py-2" defaultValue={job.remoteLabel} />
+          <label className="text-sm font-medium text-gray-700">Industry *</label>
+          <select className="mt-2 w-full border-2 border-gray-400 px-4 py-2" defaultValue={job.industry}>
+            {industryOptions.map((industry) => (
+              <option key={industry}>{industry}</option>
+            ))}
+          </select>
         </div>
-      </div>
-
-      <div className="border-2 border-gray-300 p-4 bg-gray-50 space-y-3">
-        <p className="text-sm font-semibold text-gray-800">Hero badges & quick actions</p>
-        <div className="flex flex-wrap gap-2">
-          {job.heroBadges.map((badge) => (
-            <span key={badge} className="px-3 py-1 border border-gray-400 text-xs bg-white">
-              {badge}
-            </span>
-          ))}
-          <button className="px-3 py-1 border border-dashed border-gray-400 text-xs">+ Add badge</button>
+        <div>
+          <label className="text-sm font-medium text-gray-700">Specialization *</label>
+          <select className="mt-2 w-full border-2 border-gray-400 px-4 py-2" defaultValue={job.specialization}>
+            {specializationOptions.map((spec) => (
+              <option key={spec}>{spec}</option>
+            ))}
+          </select>
         </div>
-        <p className="text-xs text-gray-500">
-          These chips appear under the job title (examples pulled from the job detail mock).
-        </p>
+        <div>
+          <label className="text-sm font-medium text-gray-700">Relocation *</label>
+          <select className="mt-2 w-full border-2 border-gray-400 px-4 py-2" defaultValue={job.relocation}>
+            {relocationOptions.map((option) => (
+              <option key={option}>{option}</option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label className="text-sm font-medium text-gray-700">Visa sponsorship *</label>
+          <select className="mt-2 w-full border-2 border-gray-400 px-4 py-2" defaultValue={job.visa}>
+            {visaOptions.map((option) => (
+              <option key={option}>{option}</option>
+            ))}
+          </select>
+        </div>
       </div>
 
       <div className="space-y-4">
-        <label className="text-sm font-medium text-gray-700">Job hero summary *</label>
-        <textarea
-          className="w-full border-2 border-gray-400 px-4 py-3 min-h-[100px]"
-          defaultValue={job.summary}
-        />
-      </div>
-
-      <div className="border-2 border-gray-300 rounded-lg p-4 space-y-4">
-        <div className="flex items-center justify-between">
-          <p className="font-semibold text-gray-800">Description builder</p>
-          <span className="text-xs text-gray-500">Matches “About / Responsibilities / Qualifications” modules</span>
-        </div>
-        {job.sections.map((section) => (
-          <div key={section.title} className="space-y-2">
-            <label className="text-sm font-medium text-gray-700">{section.title}</label>
-            <textarea
-              className="w-full border-2 border-gray-400 px-4 py-3 min-h-[120px]"
-              defaultValue={section.body}
-            />
-          </div>
-        ))}
-      </div>
-
-      <div className="border-2 border-gray-300 rounded-lg p-4 grid md:grid-cols-2 gap-4">
         <div>
-          <p className="text-sm font-semibold text-gray-800 mb-2">Responsibilities checklist</p>
-          <div className="space-y-2">
-            {job.responsibilities.map((item) => (
-              <label key={item} className="flex items-start gap-2 text-sm text-gray-700">
-                <input type="checkbox" className="mt-1 border-2 border-gray-400" defaultChecked />
-                <span>{item}</span>
-              </label>
-            ))}
-            <button className="text-xs underline text-gray-700">+ Add responsibility</button>
-          </div>
+          <label className="text-sm font-medium text-gray-700">About the role *</label>
+          <textarea className="w-full border-2 border-gray-400 px-4 py-3 min-h-[120px]" defaultValue={job.about} />
         </div>
         <div>
-          <p className="text-sm font-semibold text-gray-800 mb-2">Benefits to highlight</p>
-          <div className="flex flex-wrap gap-2">
-            {job.benefits.map((benefit) => (
-              <span key={benefit} className="px-3 py-1 border border-gray-300 text-xs bg-gray-50">
-                {benefit}
-              </span>
-            ))}
-            <button className="px-3 py-1 border border-dashed border-gray-400 text-xs">+ Benefit</button>
-          </div>
-          <p className="text-xs text-gray-500 mt-2">
-            These render inside the “Benefits & Perks” grid on the job detail template.
-          </p>
-        </div>
-      </div>
-
-      <div className="border-2 border-gray-300 rounded-lg p-4 space-y-3">
-        <p className="text-sm font-semibold text-gray-800">Application flow</p>
-        <div className="grid md:grid-cols-2 gap-3">
-          <label className="flex items-center gap-2 text-sm text-gray-700 border border-gray-200 p-3 bg-gray-50">
-            <input type="checkbox" className="border-2 border-gray-400" defaultChecked />
-            Quick Apply with LiveRec profile
-          </label>
-          <label className="flex items-center gap-2 text-sm text-gray-700 border border-gray-200 p-3 bg-gray-50">
-            <input type="checkbox" className="border-2 border-gray-400" />
-            Send to company ATS / careers site
-          </label>
-        </div>
-        <div>
-          <label className="text-xs font-medium text-gray-600">Confirmation email</label>
+          <label className="text-sm font-medium text-gray-700">Responsibilities *</label>
           <textarea
-            className="mt-2 w-full border-2 border-gray-400 px-3 py-2 text-sm min-h-[80px]"
-            defaultValue="Thanks for applying to Nimbus Labs! We’ll review applications within 5 business days."
+            className="w-full border-2 border-gray-400 px-4 py-3 min-h-[120px]"
+            defaultValue={job.responsibilities}
           />
+        </div>
+        <div>
+          <label className="text-sm font-medium text-gray-700">Requirements *</label>
+          <textarea
+            className="w-full border-2 border-gray-400 px-4 py-3 min-h-[120px]"
+            defaultValue={job.requirements}
+          />
+        </div>
+      </div>
+
+      <div className="space-y-3 border-2 border-gray-300 rounded-lg p-4">
+        <p className="text-sm font-semibold text-gray-800">Skills required *</p>
+        <p className="text-xs text-gray-500">
+          Choose from the admin-approved skills library. Selected skills surface as chips on the job detail page and boost
+          matching quality.
+        </p>
+        <div className="flex flex-wrap gap-2">
+          {skillLibrary.map((skill) => {
+            const isSelected = selectedSkills.includes(skill);
+            return (
+              <button
+                type="button"
+                key={skill}
+                onClick={() =>
+                  setSelectedSkills((prev) =>
+                    prev.includes(skill) ? prev.filter((item) => item !== skill) : [...prev, skill],
+                  )
+                }
+                className={`px-3 py-1 border-2 text-xs font-semibold ${
+                  isSelected ? "border-gray-900 bg-gray-900 text-white" : "border-gray-300 text-gray-700 bg-white"
+                }`}
+              >
+                {isSelected ? "✓ " : ""}{skill}
+              </button>
+            );
+          })}
         </div>
       </div>
 
