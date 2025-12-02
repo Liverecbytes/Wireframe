@@ -462,6 +462,31 @@ function CompanyBasicsStep({ onContinue }: { onContinue: () => void }) {
             defaultValue="AI-native infrastructure powering ethical automation."
           />
         </div>
+        <div>
+          <label className="text-sm font-medium text-gray-700">Company website *</label>
+          <input
+            className="mt-2 w-full border-2 border-gray-400 px-4 py-2"
+            defaultValue="https://www.nimbuslabs.com"
+          />
+        </div>
+        <div>
+          <label className="text-sm font-medium text-gray-700">Company type *</label>
+          <select className="mt-2 w-full border-2 border-gray-400 px-4 py-2 text-sm" defaultValue="Private">
+            <option value="Private">Private</option>
+            <option value="Public">Public</option>
+            <option value="Nonprofit">Nonprofit</option>
+            <option value="Government">Government</option>
+            <option value="Agency / Consultancy">Agency / Consultancy</option>
+          </select>
+        </div>
+        <div>
+          <label className="text-sm font-medium text-gray-700">Founded on *</label>
+          <input
+            type="month"
+            className="mt-2 w-full border-2 border-gray-400 px-4 py-2"
+            defaultValue="2018-01"
+          />
+        </div>
       </div>
       <button
         onClick={onContinue}
@@ -493,10 +518,6 @@ function BrandingAssetsStep({ onContinue }: { onContinue: () => void }) {
           <p className="text-xs text-gray-500">MP4 up to 60s or JPG 2400x1350</p>
         </div>
       </div>
-      <div>
-        <label className="text-sm font-medium text-gray-700">Landing CTA text</label>
-        <input defaultValue="Explore open roles" className="mt-2 w-full border-2 border-gray-400 px-4 py-2" />
-      </div>
       <button
         onClick={onContinue}
         className="w-full border-2 border-gray-900 bg-gray-900 text-white px-4 py-3 text-sm font-semibold"
@@ -508,7 +529,46 @@ function BrandingAssetsStep({ onContinue }: { onContinue: () => void }) {
 }
 
 function CultureBenefitsStep({ onContinue }: { onContinue: () => void }) {
-  const benefits = ["Flexible Fridays", "Recharge bonuses", "People-first leadership", "Wellness stipend", "Climate impact squads"];
+  const benefits = [
+    {
+      title: "Flexible Fridays",
+      placeholder: "Explain how teams unplug or use the day for learning.",
+    },
+    {
+      title: "Recharge Bonus",
+      placeholder: "Share the stipend or perk that helps people reset.",
+    },
+    {
+      title: "People-first Leadership",
+      placeholder: "Describe rituals that prove leadership accessibility.",
+    },
+    {
+      title: "Wellness Stipend",
+      placeholder: "Detail the monthly or annual allowance.",
+    },
+    {
+      title: "Climate Impact Squads",
+      placeholder: "Tell candidates how squads drive sustainability.",
+    },
+  ];
+  const [selectedBenefits, setSelectedBenefits] = useState<Record<string, string>>({});
+
+  const toggleBenefit = (title: string) => {
+    setSelectedBenefits((prev) => {
+      const next = { ...prev };
+      if (title in next) {
+        delete next[title];
+      } else {
+        next[title] = "";
+      }
+      return next;
+    });
+  };
+
+  const updateDescription = (title: string, value: string) => {
+    setSelectedBenefits((prev) => ({ ...prev, [title]: value }));
+  };
+
   return (
     <div className="space-y-6">
       <h3 className="text-2xl font-semibold">Culture & benefits</h3>
@@ -516,7 +576,7 @@ function CultureBenefitsStep({ onContinue }: { onContinue: () => void }) {
         Forced narrative ensures every employer page reads like the Nimbus Labs example—high-signal copy for candidates.
       </p>
       <div>
-        <label className="text-sm font-medium text-gray-700">Mission statement *</label>
+        <label className="text-sm font-medium text-gray-700">About the company *</label>
         <textarea
           className="mt-2 w-full border-2 border-gray-400 px-4 py-3 min-h-[120px]"
           defaultValue="Nimbus Labs builds AI-native infrastructure that helps enterprises launch conversational copilots safely."
@@ -524,13 +584,51 @@ function CultureBenefitsStep({ onContinue }: { onContinue: () => void }) {
       </div>
       <div>
         <label className="text-sm font-medium text-gray-700">Top benefits</label>
-        <div className="mt-2 flex flex-wrap gap-2">
+        <p className="text-xs text-gray-500 mb-3">
+          These tiles are curated by the LiveRec admin panel (title + logo). Select the benefits you actually offer, then add a
+          short description for each selected clip.
+        </p>
+        <div className="grid gap-3 md:grid-cols-2">
           {benefits.map((benefit) => (
-            <span key={benefit} className="px-3 py-1 border border-gray-300 text-xs bg-gray-50">
-              {benefit}
-            </span>
+            <div key={benefit.title} className="border-2 border-gray-300 rounded-lg p-4 space-y-3 bg-gray-50">
+              <label className="flex items-center gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  className="mt-1 border-2 border-gray-400"
+                  checked={benefit.title in selectedBenefits}
+                  onChange={() => toggleBenefit(benefit.title)}
+                />
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 border-2 border-gray-400 bg-white text-[10px] uppercase tracking-wide flex items-center justify-center">
+                    Logo
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold">{benefit.title}</p>
+                    <p className="text-xs text-gray-500">Admin-defined tile</p>
+                  </div>
+                </div>
+              </label>
+              {benefit.title in selectedBenefits ? (
+                <textarea
+                  className="w-full border-2 border-gray-400 px-3 py-2 text-sm min-h-[70px] bg-white"
+                  placeholder={benefit.placeholder}
+                  value={selectedBenefits[benefit.title]}
+                  onChange={(e) => updateDescription(benefit.title, e.target.value)}
+                />
+              ) : (
+                <p className="text-xs text-gray-500">
+                  Select this benefit to add a short description visible on your public profile.
+                </p>
+              )}
+            </div>
           ))}
-          <button className="px-3 py-1 border border-dashed border-gray-400 text-xs">+ Add benefit</button>
+        </div>
+        <div className="mt-6 space-y-2">
+          <label className="text-sm font-medium text-gray-700">Why join us</label>
+          <textarea
+            className="w-full border-2 border-gray-400 px-4 py-3 min-h-[120px]"
+            placeholder="Summarize the reasons candidates should join — leadership access, growth runway, mission alignment..."
+          />
         </div>
       </div>
       <button
