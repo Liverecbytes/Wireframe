@@ -12,7 +12,6 @@ const stepConfig = [
   { key: "culture", label: "Culture & Benefits", type: "profile" },
   { key: "job", label: "Build Job Posting", type: "profile" },
   { key: "trust", label: "Trust & Compliance", type: "profile" },
-  { key: "preview", label: "Employer Detail Preview", type: "profile" },
   { key: "plan", label: "Membership Plan Selection", type: "plan" },
   { key: "complete", label: "Launch Complete", type: "plan" },
 ];
@@ -193,10 +192,8 @@ export default function WireframeEmployerOnboarding() {
       case 8:
         return <TrustComplianceStep onContinue={() => goToStep(9)} />;
       case 9:
-        return <PreviewStep onContinue={() => goToStep(10)} />;
-      case 10:
         return <MembershipPlanStep onSelectPlan={handlePlanSelected} />;
-      case 11:
+      case 10:
         return <LaunchCompleteStep />;
       default:
         return null;
@@ -236,30 +233,18 @@ export default function WireframeEmployerOnboarding() {
             </div>
           </div>
 
-          <div className="border-2 border-gray-300 bg-white rounded-lg p-6">{getStepContent()}</div>
-
-          <div className="flex flex-wrap justify-between items-center gap-3 text-xs text-gray-500 border-t border-gray-200 pt-4">
-            <span>Need help? Dedicated onboarding manager responds within 1 business day.</span>
-            <div className="flex gap-2">
-              <button
-                disabled={currentStep === 0}
-                onClick={() => goToStep(currentStep - 1)}
-                className={`px-4 py-2 border-2 border-gray-400 ${
-                  currentStep === 0 ? "text-gray-400 cursor-not-allowed" : "text-black"
-                }`}
-              >
-                ← Back
-              </button>
-              <button
-                disabled={currentStep >= totalSteps - 1}
-                onClick={() => goToStep(currentStep + 1)}
-                className={`px-4 py-2 border-2 border-gray-900 ${
-                  currentStep >= totalSteps - 1 ? "text-gray-400 cursor-not-allowed" : "bg-gray-900 text-white"
-                }`}
-              >
-                Quick Advance →
-              </button>
-            </div>
+          <div className="border-2 border-gray-300 bg-white rounded-lg p-6 space-y-4">
+            {getStepContent()}
+            {currentStep > 0 && (
+              <div className="pt-4 border-t border-gray-200">
+                <button
+                  onClick={() => goToStep(currentStep - 1)}
+                  className="px-4 py-2 border-2 border-gray-400 text-sm font-semibold text-gray-700 bg-white"
+                >
+                  ← Back
+                </button>
+              </div>
+            )}
           </div>
         </section>
       </main>
@@ -653,7 +638,7 @@ function CultureBenefitsStep({ onContinue }: { onContinue: () => void }) {
         onClick={onContinue}
         className="w-full border-2 border-gray-900 bg-gray-900 text-white px-4 py-3 text-sm font-semibold"
       >
-        Continue to open roles →
+        Continue to job setup →
       </button>
     </div>
   );
@@ -866,62 +851,7 @@ function TrustComplianceStep({ onContinue }: { onContinue: () => void }) {
         onClick={onContinue}
         className="w-full border-2 border-gray-900 bg-gray-900 text-white px-4 py-3 text-sm font-semibold"
       >
-        Continue to preview →
-      </button>
-    </div>
-  );
-}
-
-function PreviewStep({ onContinue }: { onContinue: () => void }) {
-  return (
-    <div className="space-y-6">
-      <h3 className="text-2xl font-semibold">Review employer detail preview</h3>
-      <p className="text-sm text-gray-600">
-        LiveRec renders a mini-version of the Nimbus Labs profile so admins can confirm copy before selecting a membership plan.
-      </p>
-      <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 space-y-3">
-        <div className="flex flex-wrap gap-3 items-center">
-          <div className="w-16 h-16 border-2 border-gray-400 flex items-center justify-center text-sm">Logo</div>
-          <div>
-            <p className="font-semibold">{previewCompany.name}</p>
-            <p className="text-xs text-gray-600">{previewCompany.headline}</p>
-            <div className="flex flex-wrap gap-2 mt-2">
-              {previewCompany.badges.map((badge) => (
-                <span key={badge} className="px-2 py-0.5 border border-gray-400 text-[11px]">
-                  {badge}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
-        <div className="border border-gray-200 p-3 text-xs text-gray-600">
-          <p className="font-semibold text-gray-800">Culture snapshot</p>
-          <ul className="list-disc list-inside">
-            {previewCompany.values.map((value) => (
-              <li key={value}>{value}</li>
-            ))}
-          </ul>
-        </div>
-        <div className="grid md:grid-cols-3 gap-3 text-xs text-gray-600">
-          <div className="border border-gray-200 p-3 bg-gray-50">
-            <p className="font-semibold text-sm">Mission & Story</p>
-            <p>AI-native infrastructure for ethical automation.</p>
-          </div>
-          <div className="border border-gray-200 p-3 bg-gray-50">
-            <p className="font-semibold text-sm">Jobs</p>
-            <p>3 featured roles ready for sponsorship.</p>
-          </div>
-          <div className="border border-gray-200 p-3 bg-gray-50">
-            <p className="font-semibold text-sm">Badges</p>
-            <p>4 trust signals uploaded.</p>
-          </div>
-        </div>
-      </div>
-      <button
-        onClick={onContinue}
-        className="w-full border-2 border-gray-900 bg-gray-900 text-white px-4 py-3 text-sm font-semibold"
-      >
-        Looks good → choose plan
+        Continue to complete setup →
       </button>
     </div>
   );
