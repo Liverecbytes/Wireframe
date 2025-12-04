@@ -233,19 +233,7 @@ export default function WireframeEmployerOnboarding() {
             </div>
           </div>
 
-          <div className="border-2 border-gray-300 bg-white rounded-lg p-6 space-y-4">
-            {getStepContent()}
-            {currentStep > 0 && (
-              <div className="pt-4 border-t border-gray-200">
-                <button
-                  onClick={() => goToStep(currentStep - 1)}
-                  className="px-4 py-2 border-2 border-gray-400 text-sm font-semibold text-gray-700 bg-white"
-                >
-                  ← Back
-                </button>
-              </div>
-            )}
-          </div>
+          <div className="border-2 border-gray-300 bg-white rounded-lg p-6">{getStepContent()}</div>
         </section>
       </main>
     </div>
@@ -851,7 +839,7 @@ function TrustComplianceStep({ onContinue }: { onContinue: () => void }) {
         onClick={onContinue}
         className="w-full border-2 border-gray-900 bg-gray-900 text-white px-4 py-3 text-sm font-semibold"
       >
-        Continue to complete setup →
+        Continue to preview →
       </button>
     </div>
   );
