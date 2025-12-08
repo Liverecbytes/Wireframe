@@ -37,6 +37,12 @@ export default function WireframePage() {
             >
               🏢 Employer Detail Page
             </Link>
+            <Link 
+              href="/wireframe/job-application-flow" 
+              className="px-4 py-2 border-2 border-gray-400 bg-white text-black hover:bg-gray-800 hover:text-white transition-colors"
+            >
+              🧾 Job Application Flow
+            </Link>
           </div>
         </div>
       </div>
