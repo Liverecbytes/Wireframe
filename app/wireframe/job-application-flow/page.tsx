@@ -3,3 +3,4 @@ import WireframeJobApplicationFlow from "@/components/wireframe/WireframeJobAppl
 export default function JobApplicationFlowPage() {
   return <WireframeJobApplicationFlow />;
 }
+
