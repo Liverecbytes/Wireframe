@@ -59,13 +59,13 @@ export default function WireframeCandidateProfile() {
   ];
 
   const preferences = {
-    desiredRoles: ["Senior Product Designer", "Product Design Lead"],
-    workTypes: ["Full-time", "Contract (6+ months)"],
-    workSetup: ["Hybrid (SF Bay Area)", "Remote - US"],
+    desiredRoles: ["Senior Product Designer"],
+    workTypes: ["Full-time"],
+    workSetup: ["Hybrid"],
     salaryRange: "$140k - $170k base + equity",
     industries: ["Fintech", "Marketplace", "B2B SaaS"],
     noticePeriod: "2 weeks (currently open to interviews)",
-    relocation: "Open to Bay Area & Seattle relocation",
+    relocation: "255 w 94th st, Brooklyn, NY 11206",
     interviewSlots: "Mon-Thu, 9am-2pm PT"
   };
 
@@ -79,7 +79,6 @@ export default function WireframeCandidateProfile() {
     portfolio: "alexmakes.design",
     linkedin: "linkedin.com/in/alexjohnson",
     resumeTemplate: "Modern Focus (selected during onboarding)",
-    membership: "Professional plan active (from onboarding)",
     lastUpdated: "Profile updated 3 days ago via onboarding flow"
   };
 
@@ -125,12 +124,9 @@ export default function WireframeCandidateProfile() {
                 <p className="text-lg text-black">{contact.headline}</p>
                 <div className="flex flex-wrap gap-2 text-sm text-black">
                   <span className="border border-gray-400 px-2 py-1">📍 {contact.location}</span>
-                  <span className="border border-gray-400 px-2 py-1">🟢 {contact.openToWork}</span>
-                  <span className="border border-gray-400 px-2 py-1">{preferences.noticePeriod}</span>
                 </div>
                 <div className="flex flex-wrap gap-2 text-sm text-gray-700">
                   <span className="border border-gray-300 px-2 py-1">Last updated: {contact.lastUpdated}</span>
-                  <span className="border border-gray-300 px-2 py-1">{contact.membership}</span>
                 </div>
               </div>
             </div>
@@ -146,7 +142,6 @@ export default function WireframeCandidateProfile() {
             {[
               { label: "Experience", value: "8+ years" },
               { label: "Preferred Compensation", value: preferences.salaryRange },
-              { label: "Work Setup", value: preferences.workSetup.join(" • ") },
               { label: "Industries", value: preferences.industries.join(", ") }
             ].map((item) => (
               <div key={item.label} className="border-2 border-gray-300 p-4 bg-gray-50">
@@ -258,11 +253,6 @@ export default function WireframeCandidateProfile() {
                 <div className="border-2 border-gray-200 p-4">
                   <h3 className="font-semibold text-black mb-2">Location & Setup</h3>
                   <div className="flex flex-wrap gap-2">
-                    {preferences.workSetup.map((setup) => (
-                      <span key={setup} className="border border-gray-300 px-3 py-1 text-sm text-black">
-                        {setup}
-                      </span>
-                    ))}
                     <span className="border border-gray-300 px-3 py-1 text-sm text-black">
                       Relocation: {preferences.relocation}
                     </span>
@@ -276,13 +266,6 @@ export default function WireframeCandidateProfile() {
                       <div>
                         <div className="font-semibold text-black">Comp range</div>
                         <div>{preferences.salaryRange}</div>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-2">
-                      <span className="border-2 border-gray-400 w-4 h-4 mt-1"></span>
-                      <div>
-                        <div className="font-semibold text-black">Notice period</div>
-                        <div>{preferences.noticePeriod}</div>
                       </div>
                     </div>
                     <div className="flex items-start gap-2">
