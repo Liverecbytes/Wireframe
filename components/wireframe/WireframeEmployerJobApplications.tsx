@@ -691,7 +691,7 @@ export default function WireframeEmployerJobApplications() {
                       </div>
                       
                       {/* Assessment Tests */}
-                      {applicant.assessments && applicant.assessments.length > 0 && (
+                      {'assessments' in applicant && applicant.assessments && applicant.assessments.length > 0 && (
                         <div className="mt-2 space-y-2">
                           <div className="text-xs font-semibold text-gray-600">Assessment Tests:</div>
                           <div className="space-y-2">
@@ -760,7 +760,7 @@ export default function WireframeEmployerJobApplications() {
                       )}
 
                       {/* Screening Responses */}
-                      {applicant.screeningResponses && applicant.screeningResponses.length > 0 && (
+                      {'screeningResponses' in applicant && applicant.screeningResponses && applicant.screeningResponses.length > 0 && (
                         <div className="mt-2">
                           <button
                             onClick={() => toggleAssessment(applicant.id, 'Screening Responses')}
@@ -775,7 +775,7 @@ export default function WireframeEmployerJobApplications() {
                           </button>
 
                           {/* Expanded Screening Responses */}
-                          {expandedAssessments[`${applicant.id}-Screening Responses`] && (
+                          {expandedAssessments[`${applicant.id}-Screening Responses`] && 'screeningResponses' in applicant && (
                             <div className="ml-4 mt-2 border-2 border-gray-300 p-4 bg-white">
                               <div className="space-y-4">
                                 <div className="text-xs font-semibold text-gray-600 mb-3">
@@ -814,27 +814,29 @@ export default function WireframeEmployerJobApplications() {
                       
                       <div className="flex items-center gap-2 text-xs text-gray-600">
                         <span className="border border-gray-200 px-2 py-1">
-                          {applicant.applicantType === 'express' ? applicant.expressedDate : applicant.appliedDate}
+                          {applicant.applicantType === 'express' 
+                            ? ('expressedDate' in applicant ? applicant.expressedDate : '') 
+                            : ('appliedDate' in applicant ? applicant.appliedDate : '')}
                         </span>
                         <span>•</span>
                         <span>{applicant.lastActivity}</span>
                       </div>
 
                       {/* Express Interest Note */}
-                      {applicant.applicantType === 'express' && applicant.expressInterestNote && (
+                      {applicant.applicantType === 'express' && 'expressInterestNote' in applicant && applicant.expressInterestNote && (
                         <div className="border-l-4 border-purple-400 pl-3 py-2 bg-purple-50">
                           <div className="text-xs font-semibold text-purple-900 mb-1">💬 Express Interest Note:</div>
                           <p className="text-sm text-gray-700">{applicant.expressInterestNote}</p>
                         </div>
                       )}
                       
-                      {applicant.interviewScheduled && (
+                      {'interviewScheduled' in applicant && applicant.interviewScheduled && (
                         <div className="border-l-4 border-yellow-400 pl-3 py-1 bg-yellow-50">
                           <p className="text-sm text-black">📅 Interview: {applicant.interviewScheduled}</p>
                         </div>
                       )}
                       
-                      {applicant.offerStatus && (
+                      {'offerStatus' in applicant && applicant.offerStatus && (
                         <div className="border-l-4 border-green-400 pl-3 py-1 bg-green-50">
                           <p className="text-sm text-black">✉️ Offer Status: {applicant.offerStatus}</p>
                         </div>
