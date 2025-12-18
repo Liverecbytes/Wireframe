@@ -684,7 +684,9 @@ export default function WireframeEmployerJobApplications() {
                       <div className="flex flex-wrap gap-2 text-sm text-gray-700">
                         <span className="border border-gray-300 px-2 py-1">📍 {applicant.location}</span>
                         <span className="border border-gray-300 px-2 py-1">💼 {applicant.experience}</span>
-                        <span className="border border-gray-300 px-2 py-1">⏱️ {applicant.noticePeriod}</span>
+                        {'noticePeriod' in applicant && (
+                          <span className="border border-gray-300 px-2 py-1">⏱️ {applicant.noticePeriod}</span>
+                        )}
                         <span className="border border-gray-300 px-2 py-1">📄 Download Resume</span>
                       </div>
                       
