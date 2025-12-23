@@ -3,3 +3,4 @@ import WireframeHiringAnalytics from "@/components/wireframe/WireframeHiringAnal
 export default function Page() {
   return <WireframeHiringAnalytics />;
 }
+

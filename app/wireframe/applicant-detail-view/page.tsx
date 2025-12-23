@@ -3,3 +3,4 @@ import WireframeApplicantDetailView from "@/components/wireframe/WireframeApplic
 export default function Page() {
   return <WireframeApplicantDetailView />;
 }
+

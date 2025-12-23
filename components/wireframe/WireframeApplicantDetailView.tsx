@@ -16,17 +16,28 @@ export default function WireframeApplicantDetailView() {
     matchScore: 92,
     experience: "8+ years",
     noticePeriod: "2 weeks",
-    salaryExpectation: "$140k - $170k base + equity",
-    resume: "alex_johnson_resume.pdf"
+    salaryExpectation: "$140k - $170k",
+    resume: "alex_johnson_resume.pdf",
+    about: "Product designer focused on fintech and marketplace experiences. I pair strong UX research chops with crisp interaction design to simplify complex money flows. I work best in cross-functional teams where I can shape strategy, run discovery, and ship polished, measurable outcomes.",
+    visaStatus: "Authorized to work in the U.S.",
+    visaType: "N/A (U.S. Citizen)",
+    sponsorshipRequired: "No sponsorship required",
+    interviewAvailability: "Mon-Thu, 9am-2pm PT"
   };
 
   const jobContext = {
     id: "JOB-2048",
     title: "Senior Product Designer",
+    companyName: "TechCorp Inc.",
     department: "Product & Design",
     location: "San Francisco, CA (Hybrid)",
-    salaryRange: "$130k - $160k + equity",
+    salaryRange: "$130k - $160k",
     employmentType: "Full-time",
+    workExperience: "5-8 years",
+    seniorityLevel: "Senior",
+    industry: "Fintech",
+    specialization: "Product Design",
+    visaSponsorship: "Available",
     requiredSkills: ["Product Strategy", "UX Research", "Figma", "Design Systems", "Prototyping"],
     niceToHave: ["HTML/CSS", "React", "Design Tokens"],
     description: "We're looking for a Senior Product Designer to join our growing product team. You'll work on complex fintech products, lead design initiatives, and mentor junior designers."
@@ -267,111 +278,189 @@ export default function WireframeApplicantDetailView() {
           </div>
         </div>
 
-        {/* Main Layout: Candidate Details + Job Context Side-by-Side */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* LEFT: Candidate Details */}
+        {/* SECTION 1: APPLICANT DETAILS */}
+        <div className="bg-white border-2 border-gray-300 p-6">
+          <h2 className="text-2xl font-bold text-black border-2 border-gray-400 px-3 py-1 inline-block mb-6">
+            📋 Applicant Details
+          </h2>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* About Candidate */}
+            <div className="border-2 border-gray-200 p-4">
+              <h3 className="font-semibold text-black mb-3 border-b-2 border-gray-200 pb-2">About Candidate</h3>
+              <p className="text-sm text-gray-700 leading-relaxed">{applicant.about}</p>
+            </div>
+
+            {/* Key Metrics */}
+            <div className="border-2 border-gray-200 p-4 space-y-3">
+              <h3 className="font-semibold text-black mb-3 border-b-2 border-gray-200 pb-2">Key Metrics</h3>
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-700">Match Score:</span>
+                  <span className="text-2xl font-bold text-green-700">{applicant.matchScore}%</span>
+                </div>
+                <div className="flex justify-between items-center border-t border-gray-200 pt-2">
+                  <span className="text-gray-700">Notice Period:</span>
+                  <span className="text-black border border-gray-300 px-2 py-1">{applicant.noticePeriod}</span>
+                </div>
+                <div className="flex justify-between items-center border-t border-gray-200 pt-2">
+                  <span className="text-gray-700">Applied On:</span>
+                  <span className="text-black border border-gray-300 px-2 py-1">{applicant.appliedDate}</span>
+                </div>
+                <div className="flex justify-between items-center border-t border-gray-200 pt-2">
+                  <span className="text-gray-700">Total Experience:</span>
+                  <span className="text-black border border-gray-300 px-2 py-1">{applicant.experience}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Contact Information */}
+          <div className="mt-6 border-2 border-gray-200 p-4">
+            <h3 className="font-semibold text-black mb-3 border-b-2 border-gray-200 pb-2">Contact Details</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
+              <div className="flex flex-col">
+                <span className="text-gray-600 text-xs mb-1">Email</span>
+                <span className="text-black border border-gray-300 px-2 py-1">{applicant.email}</span>
+              </div>
+              <div className="flex flex-col">
+                <span className="text-gray-600 text-xs mb-1">Phone</span>
+                <span className="text-black border border-gray-300 px-2 py-1">{applicant.phone}</span>
+              </div>
+              <div className="flex flex-col">
+                <span className="text-gray-600 text-xs mb-1">Location</span>
+                <span className="text-black border border-gray-300 px-2 py-1">{applicant.location}</span>
+              </div>
+              <div className="flex flex-col">
+                <span className="text-gray-600 text-xs mb-1">Portfolio</span>
+                <span className="text-blue-600 underline cursor-pointer">{applicant.portfolio}</span>
+              </div>
+              <div className="flex flex-col">
+                <span className="text-gray-600 text-xs mb-1">LinkedIn</span>
+                <span className="text-blue-600 underline cursor-pointer">{applicant.linkedin}</span>
+              </div>
+              <div className="flex flex-col">
+                <span className="text-gray-600 text-xs mb-1">GitHub</span>
+                <span className="text-blue-600 underline cursor-pointer">{applicant.github}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* SECTION 2: CANDIDATE PROFILE */}
+        <div className="bg-white border-2 border-gray-300 p-6">
+          <h2 className="text-2xl font-bold text-black border-2 border-gray-400 px-3 py-1 inline-block mb-6">
+            👤 Candidate Profile
+          </h2>
+          
           <div className="space-y-6">
-            <div className="bg-white border-2 border-gray-300 p-6">
-              <h2 className="text-2xl font-bold text-black border-2 border-gray-400 px-3 py-1 inline-block mb-4">
-                Candidate Profile
-              </h2>
 
-              {/* Contact Info */}
-              <div className="mb-6 border-2 border-gray-200 p-4 space-y-2">
-                <h3 className="font-semibold text-black mb-2">Contact Information</h3>
-                <div className="space-y-1 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-gray-700">Email:</span>
-                    <span className="text-black border border-gray-300 px-2 py-1">{applicant.email}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-700">Phone:</span>
-                    <span className="text-black border border-gray-300 px-2 py-1">{applicant.phone}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-700">Portfolio:</span>
-                    <span className="text-blue-600 underline">{applicant.portfolio}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-700">LinkedIn:</span>
-                    <span className="text-blue-600 underline">{applicant.linkedin}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-700">GitHub:</span>
-                    <span className="text-blue-600 underline">{applicant.github}</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Work Experience */}
-              <div className="mb-6">
-                <h3 className="font-semibold text-black mb-3 border-b-2 border-gray-200 pb-2">Work Experience</h3>
-                <div className="space-y-4">
-                  {experiences.map((exp, idx) => (
-                    <div key={idx} className="border-2 border-gray-200 p-4">
-                      <div className="flex flex-wrap gap-2 items-center text-black mb-2">
-                        <span className="font-semibold border border-gray-400 px-2 py-1">{exp.role}</span>
-                        <span className="border border-gray-400 px-2 py-1">{exp.company}</span>
-                      </div>
-                      <div className="text-sm text-gray-600 mb-2">
-                        {exp.period} • {exp.location}
-                      </div>
-                      <ul className="space-y-1 text-sm text-gray-700">
-                        {exp.highlights.map((highlight, i) => (
-                          <li key={i} className="flex gap-2">
-                            <span className="border-2 border-gray-400 w-3 h-3 mt-1 flex-shrink-0"></span>
-                            <span>{highlight}</span>
-                          </li>
-                        ))}
-                      </ul>
+            {/* Work Experience */}
+            <div className="border-2 border-gray-200 p-4">
+              <h3 className="font-semibold text-black mb-3 border-b-2 border-gray-200 pb-2">Work Experience</h3>
+              <div className="space-y-4">
+                {experiences.map((exp, idx) => (
+                  <div key={idx} className="border border-gray-300 p-4 bg-gray-50">
+                    <div className="flex flex-wrap gap-2 items-center text-black mb-2">
+                      <span className="font-semibold border border-gray-400 px-2 py-1">{exp.role}</span>
+                      <span className="border border-gray-400 px-2 py-1">@ {exp.company}</span>
                     </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Education */}
-              <div className="mb-6">
-                <h3 className="font-semibold text-black mb-3 border-b-2 border-gray-200 pb-2">Education</h3>
-                {education.map((edu, idx) => (
-                  <div key={idx} className="border-2 border-gray-200 p-4">
-                    <div className="font-semibold text-black">{edu.school}</div>
-                    <div className="text-sm text-gray-700">{edu.degree}</div>
-                    <div className="text-sm text-gray-600">{edu.years}</div>
+                    <div className="text-sm text-gray-600 mb-3 flex flex-wrap gap-2">
+                      <span className="border border-gray-300 px-2 py-1">📅 {exp.period}</span>
+                      <span className="border border-gray-300 px-2 py-1">📍 {exp.location}</span>
+                    </div>
+                    <div className="text-xs text-gray-600 font-semibold mb-2">Key Responsibilities & Achievements:</div>
+                    <ul className="space-y-1 text-sm text-gray-700">
+                      {exp.highlights.map((highlight, i) => (
+                        <li key={i} className="flex gap-2">
+                          <span className="border-2 border-gray-400 w-3 h-3 mt-1 flex-shrink-0"></span>
+                          <span>{highlight}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 ))}
               </div>
+            </div>
 
-              {/* Skills */}
-              <div>
-                <h3 className="font-semibold text-black mb-3 border-b-2 border-gray-200 pb-2">Skills</h3>
-                <div className="border-2 border-gray-200 p-4 bg-gray-50">
-                  <div className="flex flex-wrap gap-2">
-                    {candidateSkills.map((skill) => (
-                      <span
-                        key={skill}
-                        className={`px-3 py-1 text-sm border ${
-                          jobContext.requiredSkills.includes(skill)
-                            ? "border-green-400 bg-green-50 text-green-800"
-                            : jobContext.niceToHave.includes(skill)
-                            ? "border-blue-400 bg-blue-50 text-blue-800"
-                            : "border-gray-300 text-black"
-                        }`}
-                      >
-                        {skill}
-                        {jobContext.requiredSkills.includes(skill) && " ✓"}
-                      </span>
-                    ))}
+            {/* Education Details */}
+            <div className="border-2 border-gray-200 p-4">
+              <h3 className="font-semibold text-black mb-3 border-b-2 border-gray-200 pb-2">Education Details</h3>
+              <div className="space-y-3">
+                {education.map((edu, idx) => (
+                  <div key={idx} className="border border-gray-300 p-4 bg-gray-50">
+                    <div className="font-semibold text-black mb-2">{edu.school}</div>
+                    <div className="text-sm text-gray-700 mb-1">
+                      <span className="border border-gray-300 px-2 py-1">{edu.degree}</span>
+                    </div>
+                    <div className="text-sm text-gray-600">
+                      <span className="border border-gray-300 px-2 py-1">📅 {edu.years}</span>
+                    </div>
                   </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Candidate Skills */}
+            <div className="border-2 border-gray-200 p-4">
+              <h3 className="font-semibold text-black mb-3 border-b-2 border-gray-200 pb-2">Candidate Skills</h3>
+              <div className="bg-gray-50 p-4">
+                <div className="flex flex-wrap gap-2">
+                  {candidateSkills.map((skill) => (
+                    <span
+                      key={skill}
+                      className="px-3 py-1 text-sm border border-gray-400 bg-white text-black"
+                    >
+                      {skill}
+                    </span>
+                  ))}
                 </div>
               </div>
             </div>
 
-            {/* Cover Letter / Application Notes */}
-            <div className="bg-white border-2 border-gray-300 p-6">
-              <h3 className="font-semibold text-black mb-3 border-2 border-gray-400 px-2 py-1 inline-block">
-                Cover Letter / Notes
+            {/* Availability */}
+            <div className="border-2 border-gray-200 p-4">
+              <h3 className="font-semibold text-black mb-3 border-b-2 border-gray-200 pb-2">Availability</h3>
+              <div className="space-y-3">
+                <div className="bg-gray-50 border border-gray-300 p-3">
+                  <div className="text-xs text-gray-600 mb-1">Interview Availability</div>
+                  <div className="text-sm text-black font-semibold">{applicant.interviewAvailability}</div>
+                </div>
+                <div className="bg-gray-50 border border-gray-300 p-3">
+                  <div className="text-xs text-gray-600 mb-1">Notice Period</div>
+                  <div className="text-sm text-black font-semibold">{applicant.noticePeriod}</div>
+                </div>
+                <div className="bg-gray-50 border border-gray-300 p-3">
+                  <div className="text-xs text-gray-600 mb-1">Visa Status</div>
+                  <div className="text-sm text-black font-semibold">{applicant.visaStatus}</div>
+                </div>
+                <div className="bg-gray-50 border border-gray-300 p-3">
+                  <div className="text-xs text-gray-600 mb-1">Specific Visa Type</div>
+                  <div className="text-sm text-black font-semibold">{applicant.visaType}</div>
+                </div>
+                <div className="bg-gray-50 border border-gray-300 p-3">
+                  <div className="text-xs text-gray-600 mb-1">Sponsorship Required</div>
+                  <div className="text-sm text-black font-semibold">{applicant.sponsorshipRequired}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* SECTION 3: JOB APPLICATION DETAILS */}
+        <div className="bg-white border-2 border-gray-300 p-6">
+          <h2 className="text-2xl font-bold text-black border-2 border-gray-400 px-3 py-1 inline-block mb-6">
+            💼 Job Application Details
+          </h2>
+
+          <div className="space-y-6">
+
+            {/* Cover Letter */}
+            <div className="border-2 border-gray-200 p-4">
+              <h3 className="font-semibold text-black mb-3 border-b-2 border-gray-200 pb-2">
+                Cover Letter
               </h3>
-              <div className="border-2 border-gray-200 p-4 text-sm text-gray-700 leading-relaxed">
+              <div className="bg-gray-50 border border-gray-300 p-4 text-sm text-gray-700 leading-relaxed">
                 <p className="mb-3">
                   I'm excited to apply for the Senior Product Designer role at your company. My 8+ years of experience 
                   in fintech product design, particularly at Stripe where I led the payments onboarding redesign, 
@@ -384,10 +473,108 @@ export default function WireframeApplicantDetailView() {
               </div>
             </div>
 
+            {/* Skills Information - Match Analysis */}
+            <div className="border-2 border-gray-200 p-4">
+              <h3 className="font-semibold text-black mb-3 border-b-2 border-gray-200 pb-2">
+                Skills Information & Match Analysis
+              </h3>
+              
+              {/* Matched Skills */}
+              <div className="mb-4">
+                <div className="flex items-center justify-between mb-2">
+                  <h4 className="text-sm font-semibold text-green-800">✓ Skills Matched with Job Requirements</h4>
+                  <span className="text-xs bg-green-100 border border-green-400 px-2 py-1 text-green-800">
+                    {candidateSkills.filter(s => jobContext.requiredSkills.includes(s)).length} of {jobContext.requiredSkills.length} Required
+                  </span>
+                </div>
+                <div className="bg-green-50 border border-green-300 p-3">
+                  <div className="flex flex-wrap gap-2">
+                    {candidateSkills
+                      .filter(skill => jobContext.requiredSkills.includes(skill) || jobContext.niceToHave.includes(skill))
+                      .map((skill) => (
+                        <span
+                          key={skill}
+                          className={`px-3 py-1 text-sm border-2 ${
+                            jobContext.requiredSkills.includes(skill)
+                              ? "border-green-500 bg-green-100 text-green-900"
+                              : "border-blue-400 bg-blue-50 text-blue-900"
+                          }`}
+                        >
+                          ✓ {skill}
+                          {jobContext.requiredSkills.includes(skill) && " (Required)"}
+                          {jobContext.niceToHave.includes(skill) && !jobContext.requiredSkills.includes(skill) && " (Nice-to-have)"}
+                        </span>
+                      ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Missing Skills from Job Requirements */}
+              <div className="mb-4">
+                <div className="flex items-center justify-between mb-2">
+                  <h4 className="text-sm font-semibold text-red-800">✗ Skills Required but Not Listed by Candidate</h4>
+                  <span className="text-xs bg-red-100 border border-red-400 px-2 py-1 text-red-800">
+                    {jobContext.requiredSkills.filter(s => !candidateSkills.includes(s)).length} Missing
+                  </span>
+                </div>
+                <div className="bg-red-50 border border-red-300 p-3">
+                  {jobContext.requiredSkills.filter(s => !candidateSkills.includes(s)).length > 0 ? (
+                    <div className="flex flex-wrap gap-2">
+                      {jobContext.requiredSkills
+                        .filter(skill => !candidateSkills.includes(skill))
+                        .map((skill) => (
+                          <span key={skill} className="px-3 py-1 text-sm border-2 border-red-500 bg-red-100 text-red-900">
+                            ✗ {skill}
+                          </span>
+                        ))}
+                    </div>
+                  ) : (
+                    <div className="text-sm text-green-700">All required skills are present! 🎉</div>
+                  )}
+                </div>
+              </div>
+
+              {/* Additional Skills (Not in Job Description) */}
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <h4 className="text-sm font-semibold text-gray-800">Additional Skills (Candidate Possesses)</h4>
+                  <span className="text-xs bg-gray-100 border border-gray-400 px-2 py-1 text-gray-800">
+                    {candidateSkills.filter(s => !jobContext.requiredSkills.includes(s) && !jobContext.niceToHave.includes(s)).length} Skills
+                  </span>
+                </div>
+                <div className="bg-gray-50 border border-gray-300 p-3">
+                  <div className="flex flex-wrap gap-2">
+                    {candidateSkills
+                      .filter(skill => !jobContext.requiredSkills.includes(skill) && !jobContext.niceToHave.includes(skill))
+                      .map((skill) => (
+                        <span key={skill} className="px-3 py-1 text-sm border border-gray-400 bg-white text-gray-800">
+                          {skill}
+                        </span>
+                      ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Compensation Match */}
+            <div className="border-2 border-gray-200 p-4">
+              <h3 className="font-semibold text-black mb-3 border-b-2 border-gray-200 pb-2">Compensation Match</h3>
+              <div className="space-y-3">
+                <div className="bg-blue-50 border border-blue-300 p-4">
+                  <div className="text-xs text-blue-700 mb-1">Job Budget</div>
+                  <div className="text-lg text-blue-900 font-bold">{jobContext.salaryRange}</div>
+                </div>
+                <div className="bg-green-50 border border-green-300 p-4">
+                  <div className="text-xs text-green-700 mb-1">Candidate's Expectation</div>
+                  <div className="text-lg text-green-900 font-bold">{applicant.salaryExpectation}</div>
+                </div>
+              </div>
+            </div>
+
             {/* Assessment Tests */}
-            <div className="bg-white border-2 border-gray-300 p-6">
-              <h3 className="font-semibold text-black mb-4 border-2 border-gray-400 px-2 py-1 inline-block">
-                Assessment Tests ({assessmentTests.length})
+            <div className="border-2 border-gray-200 p-4">
+              <h3 className="font-semibold text-black mb-4 border-b-2 border-gray-200 pb-2">
+                Submitted Assessment Tests ({assessmentTests.length})
               </h3>
               <div className="space-y-4">
                 {assessmentTests.map((test) => (
@@ -422,75 +609,7 @@ export default function WireframeApplicantDetailView() {
                       </div>
                     </div>
 
-                    {/* Score Breakdown */}
-                    <div className="mb-3 border-t-2 border-gray-200 pt-3">
-                      <div className="grid grid-cols-2 gap-2 text-sm mb-3">
-                        <div className="border border-gray-300 p-2 bg-gray-50">
-                          <span className="text-gray-600">Total Questions:</span>
-                          <span className="font-semibold text-black ml-2">{test.totalQuestions}</span>
-                        </div>
-                        {test.correctAnswers && (
-                          <div className="border border-gray-300 p-2 bg-gray-50">
-                            <span className="text-gray-600">Correct Answers:</span>
-                            <span className="font-semibold text-black ml-2">{test.correctAnswers}</span>
-                          </div>
-                        )}
-                      </div>
-
-                      {test.sections && (
-                        <div>
-                          <div className="text-sm font-semibold text-black mb-2">Section-wise Performance</div>
-                          <div className="space-y-2">
-                            {test.sections.map((section, idx) => (
-                              <div key={idx} className="border border-gray-300 p-2 bg-gray-50">
-                                <div className="flex justify-between items-center mb-1">
-                                  <span className="text-sm text-black">{section.name}</span>
-                                  <span className="text-sm font-semibold text-black">{section.score}%</span>
-                                </div>
-                                <div className="flex items-center gap-2">
-                                  <div className="flex-1 bg-gray-200 h-2 rounded">
-                                    <div 
-                                      className={`h-2 rounded ${
-                                        section.score >= 90 ? 'bg-green-500' :
-                                        section.score >= 70 ? 'bg-blue-500' :
-                                        'bg-yellow-500'
-                                      }`}
-                                      style={{ width: `${section.score}%` }}
-                                    ></div>
-                                  </div>
-                                  <span className="text-xs text-gray-600">{section.questions} Qs</span>
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Sample Responses */}
-                    {test.sampleResponses && (
-                      <div className="border-t-2 border-gray-200 pt-3">
-                        <div className="text-sm font-semibold text-black mb-2">Sample Responses</div>
-                        <div className="space-y-3">
-                          {test.sampleResponses.map((response, idx) => (
-                            <div key={idx} className="border border-gray-300 p-3 bg-gray-50">
-                              <div className="font-semibold text-black text-sm mb-2">Q: {response.question}</div>
-                              <div className="space-y-1 text-sm">
-                                <div className="flex items-start gap-2">
-                                  <span className={`font-semibold ${response.isCorrect ? 'text-green-700' : 'text-red-700'}`}>
-                                    {response.isCorrect ? '✓' : '✗'}
-                                  </span>
-                                  <div>
-                                    <div className="text-gray-600">Candidate's Answer:</div>
-                                    <div className="text-black">{response.candidateAnswer}</div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
+                  
 
                     {/* Case Study Response */}
                     {test.response && (
@@ -512,189 +631,86 @@ export default function WireframeApplicantDetailView() {
                       <div className="px-3 py-2 border-2 border-gray-400 text-black text-sm text-center flex-1">
                         View Full Responses
                       </div>
-                      <div className="px-3 py-2 border-2 border-gray-400 text-black text-sm text-center flex-1">
-                        Download Report
-                      </div>
+              
                     </div>
                   </div>
                 ))}
               </div>
             </div>
-          </div>
 
-          {/* RIGHT: Job Context */}
-          <div className="space-y-6">
-            <div className="bg-white border-2 border-gray-300 p-6 sticky top-20">
-              <h2 className="text-2xl font-bold text-black border-2 border-gray-400 px-3 py-1 inline-block mb-4">
-                Job Context
-              </h2>
-              <div className="space-y-4">
-                {/* Job Header */}
-                <div className="border-2 border-gray-200 p-4 bg-gray-50">
-                  <div className="flex items-center justify-between mb-2">
-                    <h3 className="text-xl font-bold text-black">{jobContext.title}</h3>
-                    <span className="text-sm border border-gray-400 px-2 py-1">ID: {jobContext.id}</span>
-                  </div>
-                  <div className="flex flex-wrap gap-2 text-sm text-gray-700">
-                    <span className="border border-gray-400 px-2 py-1">📍 {jobContext.location}</span>
-                    <span className="border border-gray-400 px-2 py-1">{jobContext.employmentType}</span>
-                    <span className="border border-gray-400 px-2 py-1">{jobContext.department}</span>
-                  </div>
-                </div>
-
-                {/* Salary Comparison */}
-                <div className="border-2 border-gray-200 p-4">
-                  <h4 className="font-semibold text-black mb-3">Compensation Match</h4>
-                  <div className="space-y-2 text-sm">
-                    <div className="flex justify-between items-center">
-                      <span className="text-gray-700">Job Offers:</span>
-                      <span className="border border-gray-400 px-2 py-1 text-black">{jobContext.salaryRange}</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-gray-700">Candidate Expects:</span>
-                      <span className="border border-gray-400 px-2 py-1 text-black">{applicant.salaryExpectation}</span>
-                    </div>
-                    <div className="mt-2 p-2 bg-yellow-50 border border-yellow-300">
-                      <span className="text-xs text-yellow-800">⚠️ Slight mismatch - candidate expects slightly higher</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Job Description */}
-                <div className="border-2 border-gray-200 p-4">
-                  <h4 className="font-semibold text-black mb-2">Job Description</h4>
-                  <p className="text-sm text-gray-700 leading-relaxed">{jobContext.description}</p>
-                </div>
-
-                {/* Skills Match */}
-                <div className="border-2 border-gray-200 p-4">
-                  <h4 className="font-semibold text-black mb-3">Skills Match Analysis</h4>
-                  
-                  <div className="mb-3">
-                    <div className="text-sm text-gray-700 mb-2">Required Skills</div>
-                    <div className="flex flex-wrap gap-2">
-                      {jobContext.requiredSkills.map((skill) => (
-                        <span
-                          key={skill}
-                          className={`px-2 py-1 text-xs border-2 ${
-                            candidateSkills.includes(skill)
-                              ? "border-green-500 bg-green-50 text-green-800"
-                              : "border-red-400 bg-red-50 text-red-800"
-                          }`}
-                        >
-                          {candidateSkills.includes(skill) ? "✓ " : "✗ "}
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div>
-                    <div className="text-sm text-gray-700 mb-2">Nice to Have</div>
-                    <div className="flex flex-wrap gap-2">
-                      {jobContext.niceToHave.map((skill) => (
-                        <span
-                          key={skill}
-                          className={`px-2 py-1 text-xs border ${
-                            candidateSkills.includes(skill)
-                              ? "border-blue-400 bg-blue-50 text-blue-800"
-                              : "border-gray-300 text-gray-600"
-                          }`}
-                        >
-                          {candidateSkills.includes(skill) ? "✓ " : ""}
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="mt-3 p-3 bg-green-50 border-2 border-green-300">
-                    <div className="font-semibold text-green-900 text-sm">Strong Match!</div>
-                    <div className="text-xs text-green-800 mt-1">
-                      Candidate has all 5 required skills and 3 out of 3 nice-to-have skills
-                    </div>
-                  </div>
-                </div>
-
-                {/* Quick Actions */}
-                <div className="border-2 border-gray-200 p-4 bg-gray-50">
-                  <h4 className="font-semibold text-black mb-3">Quick Actions</h4>
-                  <div className="flex flex-col gap-2">
-                    <div className="px-4 py-2 bg-gray-800 text-white border-2 border-gray-900 text-center">
-                      Schedule Interview
-                    </div>
-                    <div className="px-4 py-2 border-2 border-gray-400 text-black text-center">
-                      Move to Shortlist
-                    </div>
-                    <div className="px-4 py-2 border-2 border-gray-400 text-black text-center">
-                      View Full Job Post
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Timeline & Activity */}
-        <div className="bg-white border-2 border-gray-300 p-6">
-          <h3 className="text-lg font-bold text-black border-2 border-gray-400 px-3 py-1 inline-block mb-4">
-            Application Timeline
-          </h3>
-          <div className="space-y-3">
-            {timeline.map((item, idx) => (
-              <div key={idx} className="flex gap-4 border-l-4 border-gray-300 pl-4 py-2">
-                <div className="flex-shrink-0 w-32 text-sm text-gray-600">{item.date}</div>
-                <div className="flex-1">
-                  <div className="font-semibold text-black">{item.event}</div>
-                  {item.note && <div className="text-sm text-gray-600">{item.note}</div>}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Internal Notes & Comments */}
-        <div className="bg-white border-2 border-gray-300 p-6">
-          <h3 className="text-lg font-bold text-black border-2 border-gray-400 px-3 py-1 inline-block mb-4">
-            Internal Notes & Comments
-          </h3>
-          
-          {/* Add Note Form */}
-          <div className="mb-6 border-2 border-gray-200 p-4 bg-gray-50">
-            <textarea
-              placeholder="Add internal note or comment..."
-              className="w-full border-2 border-gray-400 px-3 py-2 text-black min-h-24"
-            ></textarea>
-            <div className="flex justify-between items-center mt-3">
-              <div className="flex gap-2 items-center">
-                <span className="text-sm text-gray-700">Rating:</span>
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <span key={star} className="text-xl cursor-pointer">⭐</span>
-                ))}
-              </div>
-              <div className="px-4 py-2 bg-gray-800 text-white border-2 border-gray-900">
-                Add Note
-              </div>
-            </div>
-          </div>
-
-          {/* Existing Notes */}
-          <div className="space-y-3">
-            {internalNotes.map((note, idx) => (
-              <div key={idx} className="border-2 border-gray-200 p-4">
-                <div className="flex justify-between items-start mb-2">
-                  <div>
-                    <div className="font-semibold text-black">{note.author}</div>
-                    <div className="text-xs text-gray-600">{note.date}</div>
-                  </div>
-                  <div className="flex gap-1">
-                    {[...Array(note.rating)].map((_, i) => (
-                      <span key={i} className="text-yellow-500">⭐</span>
+            {/* Internal Notes & Comments */}
+            <div className="border-2 border-gray-200 p-4">
+              <h3 className="font-semibold text-black mb-4 border-b-2 border-gray-200 pb-2">
+                Internal Notes & Comments
+              </h3>
+              
+              {/* Add Note Form */}
+              <div className="mb-4 border border-gray-300 p-4 bg-gray-50">
+                <textarea
+                  placeholder="Add internal note or comment..."
+                  className="w-full border-2 border-gray-400 px-3 py-2 text-black min-h-24"
+                ></textarea>
+                <div className="flex justify-between items-center mt-3">
+                  <div className="flex gap-2 items-center">
+                    <span className="text-sm text-gray-700">Rating:</span>
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <span key={star} className="text-xl cursor-pointer">⭐</span>
                     ))}
                   </div>
+                  <div className="px-4 py-2 bg-gray-800 text-white border-2 border-gray-900">
+                    Add Note
+                  </div>
                 </div>
-                <p className="text-sm text-gray-700">{note.note}</p>
+              </div>
+
+              {/* Existing Notes */}
+              <div className="space-y-3">
+                {internalNotes.map((note, idx) => (
+                  <div key={idx} className="border border-gray-300 p-4 bg-white">
+                    <div className="flex justify-between items-start mb-2">
+                      <div>
+                        <div className="font-semibold text-black">{note.author}</div>
+                        <div className="text-xs text-gray-600">{note.date}</div>
+                      </div>
+                      <div className="flex gap-1">
+                        {[...Array(note.rating)].map((_, i) => (
+                          <span key={i} className="text-yellow-500">⭐</span>
+                        ))}
+                      </div>
+                    </div>
+                    <p className="text-sm text-gray-700">{note.note}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* SECTION 4: APPLICATION TIMELINE & ACTIVITY */}
+        <div className="bg-white border-2 border-gray-300 p-6">
+          <h2 className="text-2xl font-bold text-black border-2 border-gray-400 px-3 py-1 inline-block mb-6">
+            📅 Application Timeline & Activity
+          </h2>
+          <div className="space-y-3">
+            {timeline.map((item, idx) => (
+              <div key={idx} className="flex gap-4 border-l-4 border-blue-400 pl-4 py-3 bg-gray-50">
+                <div className="flex-shrink-0 w-40 text-sm text-gray-600">
+                  <div className="border border-gray-300 px-2 py-1 bg-white">{item.date}</div>
+                </div>
+                <div className="flex-1">
+                  <div className="font-semibold text-black mb-1">{item.event}</div>
+                  {item.note && <div className="text-sm text-gray-600">{item.note}</div>}
+                </div>
+                <div className="flex-shrink-0">
+                  <span className={`text-xs px-2 py-1 border ${
+                    item.type === 'assessment' ? 'border-green-400 bg-green-50 text-green-800' :
+                    item.type === 'applied' ? 'border-blue-400 bg-blue-50 text-blue-800' :
+                    item.type === 'viewed' ? 'border-purple-400 bg-purple-50 text-purple-800' :
+                    'border-gray-400 bg-gray-100 text-gray-800'
+                  }`}>
+                    {item.type}
+                  </span>
+                </div>
               </div>
             ))}
           </div>
@@ -703,3 +719,5 @@ export default function WireframeApplicantDetailView() {
     </div>
   );
 }
+
+

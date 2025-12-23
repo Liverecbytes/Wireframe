@@ -3,3 +3,4 @@ import WireframeInterviewScheduling from "@/components/wireframe/WireframeInterv
 export default function Page() {
   return <WireframeInterviewScheduling />;
 }
+

@@ -3,3 +3,4 @@ import WireframeEmployerJobApplications from "@/components/wireframe/WireframeEm
 export default function Page() {
   return <WireframeEmployerJobApplications />;
 }
+
